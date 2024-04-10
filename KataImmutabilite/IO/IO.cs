@@ -85,15 +85,22 @@ public static class IO
             return engine;
         }
 
+        print($"It's {engine.GetCurrentPlayer().Name}'s turn!");
+        
         var diceThrow = ThrowDice6();
+        
         print($"Player {engine.GetCurrentPlayer().Name} rolled a {diceThrow}");
         var lastIndex = engine.GetCurrentPlayer().BoardIndex;
+        
         var movedState = engine.MoveCurrentPlayer(diceThrow);
-        var newIndex = engine.GetCurrentPlayer().BoardIndex;
-        print($"Player {engine.GetCurrentPlayer().Name} moved from {lastIndex} to {newIndex}");
-        var questionTypes = engine.GetCurrentTile().QuestionTypes;
-        var hasFailed = questionTypes.Any(qt => !askQuestionFunc(engine.GetQuestion(qt)));
+        
+        var newIndex = movedState.GetCurrentPlayer().BoardIndex;
+        print($"Player {movedState.GetCurrentPlayer().Name} moved from {lastIndex} to {newIndex}");
+        
+        var questionTypes = movedState.GetCurrentTile().QuestionTypes;
+        var hasFailed = questionTypes.Any(qt => !askQuestionFunc(movedState.GetQuestion(qt)));
         var questionState = hasFailed ? movedState.DenyTile() : movedState.GrantTile();
+        
         return RunGame(questionState, print, askQuestionFunc);
     }
 }
