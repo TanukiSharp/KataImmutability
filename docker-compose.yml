@@ -1,0 +1,6 @@
+﻿services:
+  kataimmutabilite:
+    image: kataimmutabilite
+    build:
+      context: .
+      dockerfile: KataImmutabilite/Dockerfile
