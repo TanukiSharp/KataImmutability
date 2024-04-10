@@ -9,13 +9,16 @@ var engine = IO.InitializeGameEngine(playerList.ToImmutableHashSet());
 
 var askQuestion = (Question question) =>
 {
-    Console.WriteLine(question.Text);
-    var answer = Console.ReadLine();
-    
-    return false;
+    Console.WriteLine($"{question.Type}: {question.Text}");
+
+    Console.WriteLine("Press Y if answer is valid, any other key if invalid.");
+    bool isValid = Console.ReadKey().Key == ConsoleKey.Y;
+
+    return isValid;
 };
 
 var endState = engine.RunGame(Console.WriteLine, askQuestion);
+
 // Pas challenge:
 // poser la question
 // vérifier la réponse
@@ -28,5 +31,5 @@ var endState = engine.RunGame(Console.WriteLine, askQuestion);
 // poser 6 question (1 chaque type)
 // si bonne réponse => return engine with currentPlayer.AddToken(QuestionType)
 // passer au joueur suivant
-        
+
 // condition victoire
